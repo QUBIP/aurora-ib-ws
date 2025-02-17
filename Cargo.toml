@@ -1,0 +1,12 @@
+[workspace]
+members = ["aurora", "openssl-provider-forge-rs"]
+default-members = ["aurora", "openssl-provider-forge-rs"]
+resolver = "2"
+
+[workspace.package]
+version = "0.7.0"
+
+[patch."https://github.com/qubip/aurora"]
+aurora = { path = "aurora" }
+[patch."https://github.com/qubip/openssl-provider-forge-rs"]
+openssl_provider_forge = { path = "openssl-provider-forge-rs" }

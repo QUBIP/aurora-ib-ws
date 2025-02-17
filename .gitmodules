@@ -1,0 +1,8 @@
+[submodule "aurora"]
+	path = aurora
+	#url = https://github.com/qubip/aurora.git
+	url = ../aurora.git
+[submodule "openssl-provider-forge-rs"]
+	path = openssl-provider-forge-rs
+	#url = https://github.com/qubip/openssl-provider-forge-rs.git
+	url = ../openssl-provider-forge-rs.git

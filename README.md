@@ -97,7 +97,7 @@ It uses [`git-submodules`][git:submodules] to tie together specific revisions of
 
 We have a Container image published
 [on DockerHub][dockerImage-nix:dockerhub]
-athat has a minimal
+that has a minimal
 system to build and test this project.
 
 The `justfile` includes a convenience target to run either an

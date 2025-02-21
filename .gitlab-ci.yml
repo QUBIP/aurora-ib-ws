@@ -22,6 +22,12 @@ test-code:
     #- cargo install cargo-tarpaulin
     #- cargo tarpaulin --ignore-tests
 
+openssl-list:
+  stage: test
+  script:
+    - cargo build
+    - openssl list -providers -verbose -provider "$PWD/target/debug/libaurora.so"
+
 lint-code:
   stage: lint
   before_script:

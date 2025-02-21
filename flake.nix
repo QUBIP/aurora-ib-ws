@@ -37,6 +37,7 @@
           pkgs.rust-bindgen
           pkgs.rustPlatform.bindgenHook
           pkgs.pkg-config
+          pkgs.git
           myopenssl
           myopenssl.dev
         ]
@@ -46,13 +47,30 @@
         ];
 
       aurora-naersk = naersk-lib.buildPackage {
-        src = ./.;
+        gitSubmodules = true;
+        gitAllRefs = true;
+        src = self;
+        root = self;
         copyLibs = true;
         release = false;
         doDoc = true;
         doDocFail = true;
 
-        inherit aurora-nativeBuildInputs;
+        CARGO_PROFILE_DEV_BUILD_OVERRIDE_DEBUG = true;
+        RUST_BACKTRACE = "full";
+
+        nativeBuildInputs = aurora-nativeBuildInputs;
+
+        #preBuild = ''
+        #  echo "PWD: $(pwd)"
+        #  ls -la
+        #  echo "$(git describe --tags)"
+
+        #  cd aurora
+        #  echo "PWD: $(pwd)"
+        #  ls -la
+        #  echo "$(git describe --tags)"
+        #'';
       };
       aurora = aurora-naersk;
 

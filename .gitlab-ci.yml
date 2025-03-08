@@ -28,13 +28,15 @@ openssl-list:
     - cargo build
     - openssl list -providers -verbose -provider "$PWD/target/debug/libaurora.so"
 
+test-doc:
+  stage: test
+  script:
+    - cargo doc --document-private-items
+
 lint-code:
   stage: lint
   before_script:
-    # Spit out relevant info
-    - rustc --version
-    - cargo --version
-    - openssl version -a
+    - rustfmt --version
   script:
     #- rustup component add rustfmt
     - cargo fmt -- --check

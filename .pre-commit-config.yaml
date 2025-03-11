@@ -1,0 +1,24 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: 0382986d4d1cb0204b0394e0330946af95e54d42
+    hooks:
+      - id: pretty-format-rust
+        args: [--autofix]
+      #- id: pretty-format-yaml
+      #  args: [--autofix]
+      - id: pretty-format-toml
+        args: [--autofix, --no-sort]
+        exclude: Cargo.lock
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.4.1
+    hooks:
+      - id: commitizen

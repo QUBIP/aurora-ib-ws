@@ -4,9 +4,13 @@ default-members = ["aurora", "openssl-provider-forge-rs"]
 resolver = "2"
 
 [workspace.package]
-version = "0.7.2-dev"
+version = "0.8.3-dev"
+
+[workspace.dependencies]
+openssl_provider_forge = {path = "openssl-provider-forge-rs", version = "=0.8.3"}
+
+[patch."https://github.com/qubip/openssl-provider-forge-rs"]
+openssl_provider_forge = {path = "openssl-provider-forge-rs", version = "=0.8.3"}
 
 [patch."https://github.com/qubip/aurora"]
-aurora = { path = "aurora", version = "=0.7.2-dev" }
-[patch."https://github.com/qubip/openssl-provider-forge-rs"]
-openssl_provider_forge = { path = "openssl-provider-forge-rs", version = "=0.7.2-dev" }
+aurora = {path = "aurora", version = "=0.8.3"}

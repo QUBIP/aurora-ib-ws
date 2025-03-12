@@ -54,6 +54,10 @@ serve_localhost: build
     openssl s_server -provider {{provname}} -provider default -groups SecP256r1MLKEM768 -trace -port 4443 -key {{justfile_dir}}/testcerts/server-key.pem -cert {{justfile_dir}}/testcerts/server.pem
     #openssl s_server -provider {{provname}} -provider default -groups X25519MLKEM768 -trace -port 4443 -key {{justfile_dir}}/testcerts/server-key.pem -cert {{justfile_dir}}/testcerts/server.pem
 
+# Try an s_client connection to test.openquantumsafe.org:6361 with ML-DSA-65
+connect_oqs_mldsa65: build
+    openssl s_client -provider {{provname}} -provider default -sigalgs mldsa65 -trace -connect test.openquantumsafe.org:6361
+
 # Try an s_client connection to localhost:4443 with ML-DSA-65
 connect_localhost_mldsa65: build
     openssl s_client -provider {{provname}} -provider default -sigalgs mldsa65 -trace -connect localhost:4443

@@ -161,6 +161,7 @@
                 ruby
                 python311Packages.nodeenv
                 lazygit
+                git-cliff
               ]
               ++ (
                 if pkgs.stdenv.isLinux

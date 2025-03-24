@@ -12,6 +12,7 @@ osslsrcdir := justfile_dir + "/.osslsrcdir"
 build_type := "dev"
 target := if build_type == "dev" { "target/debug" } else { "target/" + build_type }
 OPENSSL_MODULES := justfile_dir + "/" + target
+OPENSSL_TRACE := "DECODER"
 
 all: test connect_cloudflare
 
@@ -56,7 +57,11 @@ serve_localhost: build
 
 # Try an s_client connection to test.openquantumsafe.org:6361 with ML-DSA-65
 connect_oqs_mldsa65: build
+    (echo "GET / HTTP/1.1"; echo "Host: test.openquantumsafe.org"; echo ""; sleep 1) | \
     openssl s_client -provider {{provname}} -provider default -sigalgs mldsa65 -trace -connect test.openquantumsafe.org:6361
+connect_oqsprovider_mldsa65: build
+    (echo "GET / HTTP/1.1"; echo "Host: test.openquantumsafe.org"; echo ""; sleep 1) | \
+    openssl s_client -provider $OQSPROVIDER_PATH -provider default -sigalgs mldsa65 -trace -connect test.openquantumsafe.org:6361
 
 # Try an s_client connection to localhost:4443 with ML-DSA-65
 connect_localhost_mldsa65: build
@@ -64,7 +69,7 @@ connect_localhost_mldsa65: build
 
 # Host an s_server instance on localhost:4443 with ML-DSA-65
 serve_localhost_mldsa65: build
-    openssl s_server -provider {{provname}} -provider default -client_sigalgs mldsa65 -trace -port 4443 -key {{justfile_dir}}/testcerts/server-key.pem -cert {{justfile_dir}}/testcerts/server.pem
+    openssl s_server -provider {{provname}} -provider default -client_sigalgs mldsa65 -trace -port 4443 -key {{justfile_dir}}/testcerts/mldsa65-key.pem -cert {{justfile_dir}}/testcerts/mldsa65-cert.pem
 
 # Untar OpenSSL source files for debugger
 untar_ossl:
@@ -94,9 +99,11 @@ rustgdbossl: gatherinfo build untar_ossl
             -ex "disable br 3" \
             -ex "br aurora::adapters::libcrux::AdapterContext::get_op_keymgmt" \
             -ex "disable br 4" \
-            -ex "br aurora::adapters::libcrux::X25519MLKEM768Draft00::kem_functions::decapsulate" \
+            -ex "br aurora::adapters::pqclean::MLDSA65::decoder_functions::decodeSPKI" \
         --args \
-            openssl s_client -provider {{provname}} -provider default -groups X25519MLKEM768 -connect pq.cloudflareresearch.com:443
+    openssl s_client -provider {{provname}} -provider default -sigalgs mldsa65 -trace -connect test.openquantumsafe.org:6361
+#            openssl x509 -provider {{provname}} -provider default -in {{justfile_dir}}/testcerts/dumps/cert.pem -pubkey -noout
+#            openssl s_client -provider {{provname}} -provider default -groups X25519MLKEM768 -connect pq.cloudflareresearch.com:443
 #            "$(which openssl)" list -verbose -all-algorithms -provider {{provname}}
 
 # Run `list` under valgrind to check for memory leaks

@@ -59,11 +59,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1734823536,
-        "narHash": "sha256-X71kjBYkPbON130hfq9hPhWKxq6PHvnKm/rOjDHYnjA=",
+        "lastModified": 1742484978,
+        "narHash": "sha256-btmIFirQGEaKHyEiGIgagPnuvNmxdyWDA8ZgVHFt2uo=",
         "ref": "master",
-        "rev": "a3f31372d5e11c884d9748e3bfd472a7d16e0aea",
-        "revCount": 13,
+        "rev": "aa148a8c23f72fffc93fefbfa8a3eb42092b63a4",
+        "revCount": 14,
         "type": "git",
         "url": "https://gitlab.com/nicola_tuveri_group/nix-tests/my-flakes.git"
       },

@@ -185,7 +185,7 @@
             OPENSSL_SRC_FILES = myopenssl.src;
             OPENSSL_PFX = myopenssl;
             OPENSSL_CONF = "/dev/null";
-            OQSPROVIDER_PATH = myopenssl.out.outPath + "/lib/ossl-modules/oqsprovider.so";
+            OQSPROVIDER_PATH = romen.openssl_3_2_with_oqs-provider.out.outPath + "/lib/ossl-modules/oqsprovider.so";
             GDB_CUSTOM_ARGS = "-d ${myopenssl.src}";
           };
       };

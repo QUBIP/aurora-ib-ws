@@ -12,7 +12,7 @@ osslsrcdir := justfile_dir + "/.osslsrcdir"
 build_type := "dev"
 target := if build_type == "dev" { "target/debug" } else { "target/" + build_type }
 OPENSSL_MODULES := justfile_dir + "/" + target
-OPENSSL_TRACE := "DECODER"
+#OPENSSL_TRACE := "DECODER"
 
 all: test connect_cloudflare
 

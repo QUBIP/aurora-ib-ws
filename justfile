@@ -57,8 +57,8 @@ serve_localhost: build
 
 # Try an s_client connection to test.openquantumsafe.org:6361 with ML-DSA-65
 connect_oqs_mldsa65: build
-    (echo "GET / HTTP/1.1"; echo "Host: test.openquantumsafe.org"; echo ""; sleep 1) | \
-    openssl s_client -provider {{provname}} -provider default -sigalgs mldsa65 -trace -connect test.openquantumsafe.org:6361
+    (echo "GET / HTTP/1.1"; echo "Host: test.openquantumsafe.org"; echo ""; sleep 2) | \
+    openssl s_client -provider {{provname}} -provider default -sigalgs mldsa65 -groups X25519MLKEM768:SecP256r1MLKEM768 -trace -connect test.openquantumsafe.org:6361
 connect_oqsprovider_mldsa65: build
     (echo "GET / HTTP/1.1"; echo "Host: test.openquantumsafe.org"; echo ""; sleep 1) | \
     openssl s_client -provider $OQSPROVIDER_PATH -provider default -sigalgs mldsa65 -trace -connect test.openquantumsafe.org:6361

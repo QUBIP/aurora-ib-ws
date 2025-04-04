@@ -21,10 +21,16 @@
     naersk,
     romen,
     ...
-  } @ inputs:
+  } @ inputs: let
+    rust-version = "1.85.1";
+  in
     utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
-      naersk-lib = pkgs.callPackage naersk {};
+      #pkgs = import nixpkgs {inherit system;};
+      pkgs = inputs.romen.legacyPackages.${system};
+      naersk-lib = pkgs.callPackage naersk {
+        rustc = pkgs.rust-bin.stable.${rust-version}.default;
+        cargo = pkgs.rust-bin.stable.${rust-version}.default;
+      };
       romen = inputs.romen.packages.${system};
 
       myopenssl = romen.openssl_3_2;
@@ -83,10 +89,11 @@
           paths =
             aurora-nativeBuildInputs
             ++ (with pkgs; [
-              cargo
-              rustc
-              rustfmt
-              rustPackages.clippy
+              rust-bin.stable.${rust-version}.default
+              #cargo
+              #rustc
+              #rustfmt
+              #rustPackages.clippy
               just
               coreutils
               bashInteractive
@@ -146,20 +153,22 @@
               [
                 romen.openssl_3_2_with_oqs-provider
                 pkg-config
-                cargo
-                rustc
-                rustfmt
+                rust-bin.stable.${rust-version}.default
+                #cargo
+                #rustc
+                #rustfmt
+                #rustPackages.clippy
+                rustPlatform.bindgenHook
                 pre-commit
-                rustPackages.clippy
                 myopenssl
                 myopenssl.dev
                 just
-                rustPlatform.bindgenHook
                 nixpkgs-fmt
+                alejandra
 
                 neovim
                 ruby
-                python311Packages.nodeenv
+                python3Packages.nodeenv
                 lazygit
                 git-cliff
               ]

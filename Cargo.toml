@@ -4,7 +4,7 @@ default-members = ["aurora", "openssl-provider-forge-rs"]
 resolver = "2"
 
 [workspace.package]
-version = "0.8.3"
+version = "0.8.4-dev"
 
 [workspace.dependencies]
 openssl_provider_forge = {path = "openssl-provider-forge-rs", version = "=0.8.3"}
